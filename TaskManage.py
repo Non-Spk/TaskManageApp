@@ -1,11 +1,24 @@
+from datetime import datetime
+import uuid
 class Task:
     def __init__(self, title: str, description: str, due_date: str, completed=False):
         self.id = self.generate_id()
         self.title = title
         self.description = description
-        self.due_date = due_date 
+        try:
+            self.due_date = datetime.strptime(due_date, "%Y-%m-%d").date()
+        except ValueError:
+            raise ValueError("Due date must be in YYYY-MM-DD format")
         self.completed = completed
 
     def generate_id(self):
-        import uuid
         return str(uuid.uuid4())
+    
+    def create_task(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "description": self.description,
+            "due_date": self.due_date,
+            "completed": self.completed
+        }
