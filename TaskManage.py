@@ -60,7 +60,7 @@ class TaskManager:
             with open(self.json_file, 'r') as file:
                 data = json.load(file)
                 for task_data in data:
-                    task_data['due_date'] = datetime.strptime(task_data['due_date'], "%Y-%m-%d").date()  # Convert string back to date object
+                    task_data['due_date'] = datetime.strptime(task_data['due_date'], "%Y-%m-%d").date()
                     self.tasks.append(task_data)
                 print(f"Tasks have been loaded from {self.json_file}")
         except FileNotFoundError:
@@ -76,3 +76,18 @@ class TaskManager:
         for task in self.tasks:
             if task['completed']:
                 print(f"Task ID: {task['id']}, Title: {task['title']}, Description: {task['description']}, Due Date: {task['due_date']}")
+
+    def search_task(self, keyword=None, due_date=None):
+        results = []
+
+        if keyword:
+            results = [task for task in self.tasks if keyword.lower() in task['title'].lower() or keyword.lower() in task['description'].lower()]
+        
+        if due_date:
+            try:
+                due_date = datetime.strptime(due_date, "%Y-%m-%d").date()
+                results = [task for task in self.tasks if task['due_date'] == due_date]
+            except ValueError:
+                print("Invalid date format. Please use YYYY-MM-DD format.")
+        
+        return results
