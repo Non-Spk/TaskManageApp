@@ -39,6 +39,14 @@ class TaskManager:
                 return
         print(f"Task ID {task_id} not found.")
 
+    def delete_task(self, task_id):
+        for task in self.tasks:
+            if task['id'] == task_id:
+                self.tasks.remove(task)
+                print(f"Task ID {task_id} has been deleted.")
+                return
+        print(f"Task ID {task_id} not found.")
+
     def display_task(self):
         print('not Completed:')
         for task in self.tasks:
