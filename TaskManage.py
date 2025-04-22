@@ -22,3 +22,22 @@ class Task:
             "due_date": self.due_date,
             "completed": self.completed
         }
+    
+
+class TaskManager:
+    def __init__(self):
+        self.tasks = []
+
+    def add_task(self, task: Task):
+        self.tasks.append(task)
+
+    def display_task(self):
+        print('not Completed:')
+        for task in self.tasks:
+            if not task.completed:
+                print(f"Task ID: {task.id}, Title: {task.title}, Description: {task.description}, Due Date: {task.due_date}")
+
+        print('Completed:')
+        for task in self.tasks:
+            if task.completed:
+                print(f"Task ID: {task.id}, Title: {task.title}, Description: {task.description}, Due Date: {task.due_date}")
